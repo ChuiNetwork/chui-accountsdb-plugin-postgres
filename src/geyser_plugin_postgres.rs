@@ -9,12 +9,12 @@ use {
     log::*,
     serde_derive::{Deserialize, Serialize},
     serde_json,
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    chui_geyser_plugin_interface::geyser_plugin_interface::{
         GeyserPlugin, GeyserPluginError, ReplicaAccountInfoVersions, ReplicaBlockInfoVersions,
         ReplicaTransactionInfoVersions, Result, SlotStatus,
     },
-    solana_measure::measure::Measure,
-    solana_metrics::*,
+    chui_measure::measure::Measure,
+    chui_metrics::*,
     std::{fs::File, io::Read},
     thiserror::Error,
 };
@@ -159,9 +159,9 @@ impl GeyserPlugin for GeyserPluginPostgres {
     /// # Examples
     ///
     /// {
-    ///    "libpath": "/home/solana/target/release/libsolana_geyser_plugin_postgres.so",
+    ///    "libpath": "/home/chui/target/release/libchui_geyser_plugin_postgres.so",
     ///    "host": "host_foo",
-    ///    "user": "solana",
+    ///    "user": "chui",
     ///    "threads": 10,
     ///    "accounts_selector" : {
     ///       "owners" : ["9oT9R5ZyRovSVnt37QvVoBttGpNqR3J7unkb567NP8k3"]
@@ -169,7 +169,7 @@ impl GeyserPlugin for GeyserPluginPostgres {
     /// }
 
     fn on_load(&mut self, config_file: &str) -> Result<()> {
-        solana_logger::setup_with_default("info");
+        chui_logger::setup_with_default("info");
         info!(
             "Loading plugin {:?} from config_file {:?}",
             self.name(),
