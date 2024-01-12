@@ -8,7 +8,7 @@ use {
     chrono::Utc,
     log::*,
     postgres::{Client, Statement},
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    chui_geyser_plugin_interface::geyser_plugin_interface::{
         GeyserPluginError, ReplicaBlockInfoV3,
     },
 };
