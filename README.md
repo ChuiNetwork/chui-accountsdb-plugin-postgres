@@ -1,6 +1,6 @@
-The `solana-geyser-plugin-postgres` crate implements a plugin storing
+The `chui-geyser-plugin-postgres` crate implements a plugin storing
 account data to a PostgreSQL database to illustrate how a plugin can be
-developed to work with Solana validators using the [Plugin Framework](https://docs.solana.com/developing/plugins/geyser-plugins).
+developed to work with Chui validators using the [Plugin Framework](https://docs.chui.network/developing/plugins/geyser-plugins).
 
 ### Configuration File Format
 
@@ -9,9 +9,9 @@ configuration file looks like the following:
 
 ```
 {
-	"libpath": "/solana/target/release/libsolana_geyser_plugin_postgres.so",
+	"libpath": "/chui/target/release/libchui_geyser_plugin_postgres.so",
 	"host": "postgres-server",
-	"user": "solana",
+	"user": "chui",
 	"port": 5433,
 	"threads": 20,
 	"batch_size": 20,
@@ -47,9 +47,9 @@ For example:
 
 ```
     "use_ssl": true,
-    "server_ca": "/solana/.ssh/server-ca.pem",
-    "client_cert": "/solana/.ssh/client-cert.pem",
-    "client_key": "/solana/.ssh/client-key.pem",
+    "server_ca": "/chui/.ssh/server-ca.pem",
+    "client_cert": "/chui/.ssh/client-cert.pem",
+    "client_key": "/chui/.ssh/client-key.pem",
 ```
 
 ### Account Selection
@@ -168,16 +168,16 @@ Start the server:
 sudo systemctl start postgresql@14-main
 ```
 
-Create the database. For example, the following creates a database named 'solana':
+Create the database. For example, the following creates a database named 'chui':
 
 ```
-sudo -u postgres createdb solana -p 5433
+sudo -u postgres createdb chui -p 5433
 ```
 
-Create the database user. For example, the following creates a regular user named 'solana':
+Create the database user. For example, the following creates a regular user named 'chui':
 
 ```
-sudo -u postgres createuser -p 5433 solana
+sudo -u postgres createuser -p 5433 chui
 ```
 
 Verify the database is working using psql. For example, assuming the node running
@@ -185,7 +185,7 @@ PostgreSQL has the ip 10.138.0.9, the following command will land in a shell whe
 SQL commands can be entered:
 
 ```
-psql -U solana -p 5433 -h 10.138.0.9 -w -d solana
+psql -U chui -p 5433 -h 10.138.0.9 -w -d chui
 ```
 
 #### Create the Schema Objects
@@ -193,7 +193,7 @@ psql -U solana -p 5433 -h 10.138.0.9 -w -d solana
 Use the scripts/create_schema.sql
 
 ```
-psql -U solana -p 5433 -h 10.138.0.9 -w -d solana -f scripts/create_schema.sql
+psql -U chui -p 5433 -h 10.138.0.9 -w -d chui -f scripts/create_schema.sql
 ```
 
 After this, start the validator with the plugin by using the `--geyser-plugin-config`
@@ -205,7 +205,7 @@ To destroy the database objects, created by `create_schema.sql`, use
 drop_schema.sql. For example,
 
 ```
-psql -U solana -p 5433 -h 10.138.0.9 -w -d solana -f scripts/drop_schema.sql
+psql -U chui -p 5433 -h 10.138.0.9 -w -d chui -f scripts/drop_schema.sql
 ```
 
 ### Capture Historical Account Data
