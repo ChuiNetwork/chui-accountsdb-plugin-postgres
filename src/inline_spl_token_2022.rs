@@ -1,8 +1,8 @@
 /// Partial SPL Token declarations inlined to avoid an external dependency on the spl-token-2022 crate
-/// Copied from solana-runtime
+/// Copied from chui-runtime
 use crate::inline_spl_token::{self, GenericTokenAccount};
 
-solana_sdk::declare_id!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
+chui_sdk::declare_id!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
 
 // `spl_token_program_2022::extension::AccountType::Account` ordinal value
 const ACCOUNTTYPE_ACCOUNT: u8 = 2;
