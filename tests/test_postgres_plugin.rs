@@ -3,7 +3,7 @@
 use serde_json::json;
 
 /// Integration testing for the PostgreSQL plugin
-/// This requires a PostgreSQL database named 'solana' be setup at localhost at port 5432
+/// This requires a PostgreSQL database named 'chui' be setup at localhost at port 5432
 /// This is automatically setup in the CI environment.
 /// To setup manually on Ubuntu Linux, do the following,
 /// sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -11,39 +11,39 @@ use serde_json::json;
 /// apt install -y postgresql-14
 /// sudo /etc/init.d/postgresql start
 ///
-/// sudo -u postgres psql --command "CREATE USER solana WITH SUPERUSER PASSWORD 'solana';"
-/// sudo -u postgres createdb -O solana solana
-/// PGPASSWORD=solana psql -U solana -p 5432 -h localhost -w -d solana -f scripts/create_schema.sql
+/// sudo -u postgres psql --command "CREATE USER chui WITH SUPERUSER PASSWORD 'chui';"
+/// sudo -u postgres createdb -O chui chui
+/// PGPASSWORD=chui psql -U chui -p 5432 -h localhost -w -d chui -f scripts/create_schema.sql
 ///
 /// The test will cover transmitting accounts, transaction and slot,
 /// block metadata.
 ///
 /// To clean up the database: run the following, otherwise you may run into duplicate key violations:
-/// PGPASSWORD=solana psql -U solana -p 5432 -h localhost -w -d solana -f scripts/drop_schema.sql
+/// PGPASSWORD=chui psql -U chui -p 5432 -h localhost -w -d chui -f scripts/drop_schema.sql
 ///
 /// Before running 'cargo test', please run 'cargo build'
 use {
     libloading::Library,
     log::*,
     serial_test::serial,
-    solana_core::validator::ValidatorConfig,
-    solana_geyser_plugin_postgres::{
+    chui_core::validator::ValidatorConfig,
+    chui_geyser_plugin_postgres::{
         geyser_plugin_postgres::GeyserPluginPostgresConfig, postgres_client::SimplePostgresClient,
     },
-    solana_local_cluster::{
+    chui_local_cluster::{
         cluster::Cluster,
         local_cluster::{ClusterConfig, LocalCluster},
         validator_configs::*,
     },
-    solana_runtime::{
+    chui_runtime::{
         snapshot_archive_info::SnapshotArchiveInfoGetter, snapshot_config::SnapshotConfig,
         snapshot_hash::SnapshotHash, snapshot_utils,
     },
-    solana_sdk::{
+    chui_sdk::{
         client::SyncClient, clock::Slot, commitment_config::CommitmentConfig,
         epoch_schedule::MINIMUM_SLOTS_PER_EPOCH,
     },
-    solana_streamer::socket::SocketAddrSpace,
+    chui_streamer::socket::SocketAddrSpace,
     std::{
         fs::{self, File},
         io::Read,
@@ -56,7 +56,7 @@ use {
 };
 
 const RUST_LOG_FILTER: &str =
-    "info,solana_core::replay_stage=warn,solana_local_cluster=info,local_cluster=info,solana_ledger=info";
+    "info,chui_core::replay_stage=warn,chui_local_cluster=info,local_cluster=info,chui_ledger=info";
 
 fn wait_for_next_snapshot(
     cluster: &LocalCluster,
@@ -130,9 +130,9 @@ fn generate_geyser_plugin_config() -> (TempDir, PathBuf) {
     // as the framework is looking for the library relative to the
     // config file otherwise.
     let lib_name = if std::env::consts::OS == "macos" {
-        "libsolana_geyser_plugin_postgres.dylib"
+        "libchui_geyser_plugin_postgres.dylib"
     } else {
-        "libsolana_geyser_plugin_postgres.so"
+        "libchui_geyser_plugin_postgres.so"
     };
 
     let mut lib_path = path.clone();
@@ -147,7 +147,7 @@ fn generate_geyser_plugin_config() -> (TempDir, PathBuf) {
     let lib_path = lib_path.as_os_str().to_str().unwrap();
     let config_content = json!({
         "libpath": lib_path,
-        "connection_str": "host=localhost user=solana password=solana port=5432",
+        "connection_str": "host=localhost user=chui password=chui port=5432",
         "threads": 20,
         "batch_size": 20,
         "panic_on_db_errors": true,
@@ -242,12 +242,12 @@ fn test_without_plugin() {
 #[test]
 #[serial]
 fn test_postgres_plugin() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    chui_logger::setup_with_default(RUST_LOG_FILTER);
 
     unsafe {
         let filename = match std::env::consts::OS {
-            "macos" => "libsolana_geyser_plugin_postgres.dylib",
-            _ => "libsolana_geyser_plugin_postgres.so",
+            "macos" => "libchui_geyser_plugin_postgres.dylib",
+            _ => "libchui_geyser_plugin_postgres.so",
         };
 
         let lib = Library::new(filename);
