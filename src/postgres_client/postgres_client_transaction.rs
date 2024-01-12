@@ -9,11 +9,11 @@ use {
     log::*,
     postgres::{Client, Statement},
     postgres_types::{FromSql, ToSql},
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    chui_geyser_plugin_interface::geyser_plugin_interface::{
         GeyserPluginError, ReplicaTransactionInfoV2,
     },
-    solana_runtime::bank::RewardType,
-    solana_sdk::{
+    chui_runtime::bank::RewardType,
+    chui_sdk::{
         instruction::CompiledInstruction,
         message::{
             v0::{self, LoadedAddresses, MessageAddressTableLookup},
@@ -21,7 +21,7 @@ use {
         },
         transaction::TransactionError,
     },
-    solana_transaction_status::{
+    chui_transaction_status::{
         InnerInstructions, Reward, TransactionStatusMeta, TransactionTokenBalance,
     },
     std::sync::atomic::Ordering,
@@ -658,8 +658,8 @@ impl ParallelPostgresClient {
 pub(crate) mod tests {
     use {
         super::*,
-        solana_account_decoder::parse_token::UiTokenAmount,
-        solana_sdk::{
+        chui_account_decoder::parse_token::UiTokenAmount,
+        chui_sdk::{
             hash::Hash,
             message::VersionedMessage,
             pubkey::Pubkey,
@@ -669,7 +669,7 @@ pub(crate) mod tests {
                 SanitizedTransaction, SimpleAddressLoader, Transaction, VersionedTransaction,
             },
         },
-        solana_transaction_status::InnerInstruction,
+        chui_transaction_status::InnerInstruction,
     };
 
     fn check_compiled_instruction_equality(
