@@ -10,10 +10,10 @@ use {
     },
     log::*,
     postgres::{Client, Statement},
-    solana_geyser_plugin_interface::geyser_plugin_interface::GeyserPluginError,
-    solana_measure::measure::Measure,
-    solana_metrics::*,
-    solana_sdk::pubkey::Pubkey,
+    chui_geyser_plugin_interface::geyser_plugin_interface::GeyserPluginError,
+    chui_measure::measure::Measure,
+    chui_metrics::*,
+    chui_sdk::pubkey::Pubkey,
     tokio_postgres::types,
 };
 
