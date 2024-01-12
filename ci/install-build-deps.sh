@@ -9,5 +9,5 @@ sudo apt-get update
 sudo apt-get install -y postgresql-14
 
 sudo /etc/init.d/postgresql start
-sudo -u postgres psql --command "CREATE USER solana WITH SUPERUSER PASSWORD 'solana';"
-sudo -u postgres createdb -O solana solana
+sudo -u postgres psql --command "CREATE USER chui WITH SUPERUSER PASSWORD 'chui';"
+sudo -u postgres createdb -O chui chui
