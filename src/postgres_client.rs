@@ -18,12 +18,12 @@ use {
     postgres_client_block_metadata::DbBlockInfo,
     postgres_client_transaction::LogTransactionRequest,
     postgres_openssl::MakeTlsConnector,
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    chui_geyser_plugin_interface::geyser_plugin_interface::{
         GeyserPluginError, ReplicaAccountInfoV3, ReplicaBlockInfoV3, SlotStatus,
     },
-    solana_measure::measure::Measure,
-    solana_metrics::*,
-    solana_sdk::timing::AtomicInterval,
+    chui_measure::measure::Measure,
+    chui_metrics::*,
+    chui_sdk::timing::AtomicInterval,
     std::{
         collections::HashSet,
         sync::{
